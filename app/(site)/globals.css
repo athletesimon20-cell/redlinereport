@@ -1,0 +1,263 @@
+@import "tailwindcss";
+
+@theme {
+  /* Redline Report brand tokens — Ink/Red/Ground/Surface below are the
+     official values from the logo design handoff (design_handoff_redline_logo),
+     not approximations. One red, spent deliberately; true neutrals otherwise. */
+  --color-ink-950: #201e1d;
+  --color-ink-900: #29201b;
+  --color-ink-800: #332924;
+  --color-paper-50: #f3f2f2;
+  --color-paper-100: #ffffff;
+  --color-paper-200: #e7e5e4;
+  --color-steel-700: #3a332f;
+  --color-steel-500: #726a65;
+  --color-steel-300: #cbc6c3;
+  --color-steel-200: #e2ddda;
+  --color-red-600: #ec3013;
+  --color-red-700: #a5220d;
+
+  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-plex-sans), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
+  --font-brand: var(--font-archivo), sans-serif;
+
+  --animate-shutter: shutter 0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  --animate-stamp-in: stamp-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes shutter {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0% 0);
+  }
+}
+
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: scale(2.4) rotate(-14deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-8deg);
+  }
+}
+
+:root {
+  --background: var(--color-paper-50);
+  --foreground: var(--color-ink-950);
+  --surface: var(--color-paper-100);
+  --surface-raised: #ffffff;
+  --border-color: var(--color-steel-200);
+  --muted: var(--color-steel-500);
+  --accent: var(--color-red-600);
+  --accent-ink: #ffffff;
+  /* "Danger" (cons) is deliberately neutral, not a second red — red stays a
+     single, unambiguous signal for the brand/verdict/CTAs. The X icon carries
+     the "con" meaning instead of a competing color. */
+  --danger: var(--color-ink-950);
+}
+
+.dark {
+  --background: var(--color-ink-950);
+  /* Brand spec: "type on dark" is Ground (#f3f2f2), not pure white. */
+  --foreground: var(--color-paper-50);
+  --surface: var(--color-ink-900);
+  --surface-raised: var(--color-ink-800);
+  --border-color: var(--color-steel-700);
+  --muted: var(--color-steel-300);
+  --accent: var(--color-red-600);
+  --accent-ink: #ffffff;
+  --danger: var(--color-paper-50);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border-color);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-danger: var(--danger);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+::selection {
+  background: var(--color-red-600);
+  color: #ffffff;
+}
+
+/* Hang-tag card: clipped top-right corner + punched hole */
+.tag-card {
+  position: relative;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 22px) 0,
+    100% 22px,
+    100% 100%,
+    0 100%
+  );
+}
+
+.tag-card::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--background);
+  border: 1.5px solid var(--border-color);
+  z-index: 2;
+}
+
+/* Dashed stitch border, used inside padded wrapper so clip-path corner isn't cut off */
+.stitch-border {
+  border: 1.5px dashed var(--border-color);
+}
+
+/* Rotated rubber-stamp verdict badge — red ink for a pass, neutral outline otherwise */
+.stamp {
+  transform: rotate(-8deg);
+  border: 3px solid currentColor;
+  border-radius: 999px;
+  position: relative;
+}
+
+.stamp::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  opacity: 0.6;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Redline Report wordmark — per design_handoff_redline_logo, turn 5       */
+/* ("Struck"). Ratios and colors are final; scale only via font-size.      */
+/* Ink color reuses --foreground so it already flips for dark mode; the    */
+/* strike stays red in both modes, per the handoff's "on dark" spec.       */
+/* ---------------------------------------------------------------------- */
+
+.rr-lockup {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.08em;
+  font-family: var(--font-brand);
+  color: var(--foreground);
+  text-transform: uppercase;
+}
+.rr-lockup .rr-strikeline {
+  position: relative;
+  display: inline-block;
+}
+.rr-lockup .rr-heavy {
+  font-size: 1em;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+  display: block;
+}
+.rr-lockup .rr-light {
+  font-size: 1em;
+  font-weight: 300;
+  letter-spacing: 0.055em;
+  line-height: 0.9;
+  display: block;
+}
+.rr-strike {
+  position: absolute;
+  left: -0.185em;
+  right: -0.185em;
+  top: 50%;
+  height: 0.145em;
+  background: var(--color-red-600);
+  transform: translateY(-50%);
+}
+
+.rr-horizontal {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-brand);
+  color: var(--foreground);
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+.rr-horizontal .rr-light {
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
+.rr-horizontal .rr-strike {
+  left: -0.2em;
+  right: -0.2em;
+  height: 0.19em;
+}
+
+.rr-mark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-ink-950);
+  font-family: var(--font-brand);
+  flex-shrink: 0;
+}
+.rr-mark span {
+  font-size: 0.68em;
+  font-weight: 800;
+  color: var(--color-paper-100);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+.rr-mark::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 0.145em;
+  background: var(--color-red-600);
+  transform: translateY(-50%);
+}
+/* Below 24px the strike is dropped per the handoff: solid red tile, white R. */
+.rr-mark--small {
+  background: var(--color-red-600);
+}
+.rr-mark--small span {
+  font-size: 0.75em;
+  color: #ffffff;
+}
+.rr-mark--small::after {
+  content: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
