@@ -29,7 +29,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <LogoLockup className="text-[44px] sm:text-[64px]" />
+          <LogoLockup className="h-32 sm:h-44" />
         </motion.div>
 
         <motion.p

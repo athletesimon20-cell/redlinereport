@@ -25,11 +25,11 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" onClick={() => setOpen(false)} aria-label="Redline Report home">
-          <LogoHorizontal className="text-[19px]" />
+        <Link href="/" onClick={() => setOpen(false)} aria-label="Redline Report home" className="shrink-0">
+          <LogoHorizontal className="h-5 sm:h-6 lg:h-7" />
         </Link>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {NAV_LINKS.map((link) => {
             const active = pathname === link.href || pathname?.startsWith(link.href + "/");
             return (
@@ -47,14 +47,14 @@ export function Header() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-4 md:flex">
+        <div className="hidden items-center gap-4 lg:flex">
           <RegionPicker />
           <ThemeToggle />
         </div>
 
         <button
           type="button"
-          className="flex h-9 w-9 items-center justify-center text-foreground md:hidden"
+          className="flex h-9 w-9 items-center justify-center text-foreground lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
@@ -70,7 +70,7 @@ export function Header() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="overflow-hidden border-t border-border bg-background md:hidden"
+            className="overflow-hidden border-t border-border bg-background lg:hidden"
           >
             <nav className="flex flex-col gap-1 px-4 py-4">
               {NAV_LINKS.map((link) => (

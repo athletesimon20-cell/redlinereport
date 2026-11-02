@@ -1,39 +1,48 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * Redline Report wordmark, per design_handoff_redline_logo (turn 5, "Struck").
- * Ratios/colors are defined in the .rr-* classes in globals.css — scale these
- * only via font-size (inherited from a parent text-* class or inline style).
+ * Redline Report logo. Each lockup ships as a light-mode and a dark-mode PNG
+ * (public/brand); globals.css shows the right one based on the `.dark` class.
+ * Size with a height class (e.g. "h-7") — width follows the aspect ratio.
  */
 
-/** Stacked lockup — REDLINE over Report, red strike through REDLINE only. Primary usage. */
-export function LogoLockup({ className }: { className?: string }) {
+interface ThemedLogoProps {
+  name: "horizontal" | "stacked";
+  width: number;
+  height: number;
+  /** Widest rendered width in CSS px — lets Next pick a right-sized file. */
+  displayWidth: number;
+  className?: string;
+  priority?: boolean;
+}
+
+function ThemedLogo({ name, width, height, displayWidth, className, priority }: ThemedLogoProps) {
+  const shared = { width, height, priority, sizes: `${displayWidth}px` };
   return (
-    <div className={cn("rr-lockup", className)}>
-      <span className="rr-strikeline">
-        <span className="rr-heavy">Redline</span>
-        <span className="rr-strike" aria-hidden="true" />
-      </span>
-      <span className="rr-light">Report</span>
-    </div>
+    <>
+      <Image
+        {...shared}
+        alt="Redline Report"
+        src={`/brand/logo-${name}-light.png`}
+        className={cn("rr-logo-light block w-auto shrink-0", className)}
+      />
+      <Image
+        {...shared}
+        alt="Redline Report"
+        src={`/brand/logo-${name}-dark.png`}
+        className={cn("rr-logo-dark w-auto shrink-0", className)}
+      />
+    </>
   );
 }
 
-/** Single-line lockup for the header/nav and other small/tight spots. */
+/** Gauge + single-line wordmark for the header, footer, and other tight spots. */
 export function LogoHorizontal({ className }: { className?: string }) {
-  return (
-    <span className={cn("rr-horizontal", className)}>
-      Redline<span className="rr-light"> Report</span>
-      <span className="rr-strike" aria-hidden="true" />
-    </span>
-  );
+  return <ThemedLogo name="horizontal" width={1200} height={103} displayWidth={330} className={className} priority />;
 }
 
-/** Square "R" mark — avatar/app-icon usage. `small` drops the strike per the handoff (<24px). */
-export function LogoMark({ small, className }: { small?: boolean; className?: string }) {
-  return (
-    <div className={cn("rr-mark", small && "rr-mark--small", className)} aria-hidden="true">
-      <span>R</span>
-    </div>
-  );
+/** Gauge stacked over the wordmark — primary hero usage. */
+export function LogoLockup({ className }: { className?: string }) {
+  return <ThemedLogo name="stacked" width={900} height={508} displayWidth={320} className={className} priority />;
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Anton, IBM_Plex_Sans, IBM_Plex_Mono, Archivo } from "next/font/google";
+import { Anton, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { RegionProvider } from "@/lib/regions/context";
@@ -24,15 +24,6 @@ const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
 });
 
-// Logo-only typeface — used exclusively by the rr-lockup/rr-horizontal/rr-mark
-// brand components (components/brand/logo.tsx), per the brand handoff. Not the
-// site's general display face — that stays Anton.
-const archivo = Archivo({
-  variable: "--font-archivo",
-  weight: ["300", "400", "800"],
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
   title: {
     default: "Redline Report — Motorcycle Gear & Bike Reviews",
@@ -47,7 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${anton.variable} ${plexSans.variable} ${plexMono.variable} ${archivo.variable}`}
+      className={`${anton.variable} ${plexSans.variable} ${plexMono.variable}`}
     >
       <body className="flex min-h-screen flex-col font-sans antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>

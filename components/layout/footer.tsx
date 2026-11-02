@@ -7,7 +7,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
           <div className="md:col-span-2">
-            <LogoHorizontal className="text-[19px]" />
+            <LogoHorizontal className="h-7" />
             <p className="mt-3 max-w-sm text-sm leading-relaxed text-foreground/70">
               Gear and bikes, tested to the limit. Every review is ridden, worn, and rained on
               before we write a word — independent testing, no manufacturer copy.
