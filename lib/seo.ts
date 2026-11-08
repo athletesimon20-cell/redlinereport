@@ -4,7 +4,7 @@ import { GEAR_CATEGORY_LABELS } from "@/lib/taxonomy";
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.redlinereport.press").replace(/\/$/, "");
 export const SITE_NAME = "Redline Report";
-export const CONTACT_EMAIL = "redlinerepotr.press@gmail.com";
+export const CONTACT_EMAIL = "redlinereport.press@gmail.com";
 export const SITE_DESCRIPTION =
   "Field-tested motorcycle helmet, jacket, glove, boot, luggage and bike reviews with honest verdicts and side-by-side comparisons.";
 
