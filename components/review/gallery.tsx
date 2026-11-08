@@ -5,7 +5,7 @@ interface GalleryItem {
   caption?: string;
 }
 
-export function Gallery({ items }: { items?: GalleryItem[] }) {
+export function Gallery({ items, productTitle }: { items?: GalleryItem[]; productTitle: string }) {
   const photos = (items ?? []).filter((item): item is Required<GalleryItem> => Boolean(item?.image?.src));
   if (photos.length === 0) return null;
 
@@ -19,7 +19,7 @@ export function Gallery({ items }: { items?: GalleryItem[] }) {
           <figure key={i} className="group relative aspect-square overflow-hidden border border-border bg-surface">
             <Image
               src={item.image.src}
-              alt={item.caption ?? "Gallery photo"}
+              alt={item.caption ?? `${productTitle} — photo ${i + 1}`}
               fill
               sizes="(min-width: 640px) 33vw, 50vw"
               className="object-cover transition-transform duration-300 group-hover:scale-105"

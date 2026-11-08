@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Mail } from "lucide-react";
+import { buildMetadata, CONTACT_EMAIL } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Contact",
-  description: "Get in touch with the Redline Report team.",
-};
+  description:
+    "Get in touch with the Redline Report team — suggest gear to test, report a correction, or ask about partnerships.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (
@@ -17,16 +20,12 @@ export default function ContactPage() {
       </p>
 
       <a
-        href="mailto:hello@redlinereport.example"
+        href={`mailto:${CONTACT_EMAIL}`}
         className="mt-8 inline-flex items-center gap-2 bg-ink-950 px-6 py-3 font-mono text-sm font-bold uppercase tracking-wide text-paper-100 transition-colors hover:bg-accent hover:text-accent-ink dark:bg-accent dark:text-accent-ink dark:hover:bg-paper-100"
       >
         <Mail className="h-4 w-4" aria-hidden="true" />
-        hello@redlinereport.example
+        {CONTACT_EMAIL}
       </a>
-
-      <p className="mt-6 font-mono text-xs uppercase tracking-wide text-muted">
-        Placeholder address — swap in your real inbox before launch.
-      </p>
     </div>
   );
 }

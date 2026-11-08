@@ -3,17 +3,30 @@ import { CategoryTile } from "@/components/home/category-tile";
 import { ProductCard } from "@/components/product/product-card";
 import { getAllGear, getGearCategoryCounts } from "@/lib/content/products";
 import { GEAR_CATEGORIES, GEAR_CATEGORY_LABELS } from "@/lib/taxonomy";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbJsonLd, buildMetadata, itemListJsonLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Motorcycle Gear Reviews",
-  description: "Independently tested helmets, jackets, gloves, boots, and communicators.",
-};
+  description:
+    "Independently tested motorcycle helmets, jackets, gloves, boots, luggage, riding suits and communicators — with ratings, pros and cons, and specs.",
+  path: "/gear",
+});
 
 export default async function GearHub() {
   const [counts, allGear] = await Promise.all([getGearCategoryCounts(), getAllGear()]);
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Gear", path: "/gear" },
+          ]),
+          itemListJsonLd("Motorcycle gear reviews", allGear),
+        ]}
+      />
       <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-accent">Gear</p>
       <h1 className="font-display mt-2 text-4xl leading-tight sm:text-5xl">Every category, field-tested</h1>
       <p className="mt-3 max-w-xl text-lg text-foreground/75">

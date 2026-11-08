@@ -3,11 +3,14 @@ import Image from "next/image";
 import { getAllAuthors } from "@/lib/content/authors";
 import { getSiteStory } from "@/lib/content/site-story";
 import { RenderRichText } from "@/components/portable-text/render-rich-text";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "About",
-  description: "Who we are and how we test motorcycle gear and bikes.",
-};
+  description:
+    "Who is behind Redline Report, the riders who test the gear, and how we review motorcycle gear and bikes.",
+  path: "/about",
+});
 
 function initialsFrom(name: string) {
   return name

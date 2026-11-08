@@ -2,8 +2,14 @@ import type { Metadata } from "next";
 import { CategoryTile } from "@/components/home/category-tile";
 import { getGearCategoryCounts } from "@/lib/content/products";
 import { GEAR_CATEGORIES, GEAR_CATEGORY_LABELS } from "@/lib/taxonomy";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Compare Gear" };
+export const metadata: Metadata = buildMetadata({
+  title: "Compare Motorcycle Gear",
+  description:
+    "Compare motorcycle helmets, jackets, gloves, boots, luggage and suits head to head within each category.",
+  path: "/compare/gear",
+});
 
 export default async function CompareGearHub() {
   const counts = await getGearCategoryCounts();

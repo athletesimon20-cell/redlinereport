@@ -1,17 +1,29 @@
 import type { Metadata } from "next";
 import { ProductCard } from "@/components/product/product-card";
 import { getLegacyItems } from "@/lib/content/products";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbJsonLd, buildMetadata, itemListJsonLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Legacy Gear & Bikes",
   description: "Reviews of discontinued motorcycle gear and motorcycles no longer in production.",
-};
+  path: "/legacy",
+});
 
 export default async function LegacyPage() {
   const items = await getLegacyItems();
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Legacy", path: "/legacy" },
+          ]),
+          itemListJsonLd("Legacy gear and bike reviews", items),
+        ]}
+      />
       <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-accent">Legacy</p>
       <h1 className="font-display mt-2 text-4xl leading-tight sm:text-5xl">Out of production, not out of mind</h1>
       <p className="mt-3 max-w-xl text-lg text-foreground/75">

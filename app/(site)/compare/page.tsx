@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Compare Gear & Bikes",
-  description: "Put helmets against helmets, jackets against jackets, or bike against bike.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Compare Motorcycle Gear & Bikes",
+  description:
+    "Compare motorcycle helmets, jackets, gloves and bikes side by side on the specs that matter — weight, protection, power, price and more.",
+  path: "/compare",
+});
 
 export default function ComparePage() {
   return (

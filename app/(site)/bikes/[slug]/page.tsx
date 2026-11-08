@@ -4,6 +4,7 @@ import { ReviewPage } from "@/components/review/review-page";
 import { getAllBikes, getBikeBySlug } from "@/lib/content/products";
 import { bikeSpecs } from "@/lib/specs/categories";
 import { BIKE_TYPE_LABELS } from "@/lib/taxonomy";
+import { productMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const bikes = await getAllBikes();
@@ -18,10 +19,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = await getBikeBySlug(slug);
   if (!product) return {};
-  return {
-    title: product.title,
-    description: product.seo?.metaDescription ?? product.excerpt,
-  };
+  return productMetadata(product, product.permalink);
 }
 
 export default async function BikeReviewPage({

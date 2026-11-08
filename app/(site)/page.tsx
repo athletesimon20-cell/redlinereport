@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { GitCompareArrows } from "lucide-react";
 import { Hero } from "@/components/home/hero";
@@ -6,6 +7,14 @@ import { HowWeTest } from "@/components/home/how-we-test";
 import { ProductCard } from "@/components/product/product-card";
 import { getFeatured, getAllBikes, getGearCategoryCounts } from "@/lib/content/products";
 import { GEAR_CATEGORIES, GEAR_CATEGORY_LABELS } from "@/lib/taxonomy";
+import { buildMetadata, SITE_DESCRIPTION } from "@/lib/seo";
+
+export const metadata: Metadata = buildMetadata({
+  title: "Redline Report — Motorcycle Gear & Bike Reviews",
+  description: SITE_DESCRIPTION,
+  path: "/",
+  absoluteTitle: true,
+});
 
 export default async function Home() {
   const [featured, gearCounts, bikes] = await Promise.all([

@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product/product-card";
 import { getGearByCategory } from "@/lib/content/products";
 import { GEAR_CATEGORIES, GEAR_CATEGORY_LABELS, type GearCategory } from "@/lib/taxonomy";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbJsonLd, buildMetadata, itemListJsonLd } from "@/lib/seo";
 
 function isGearCategory(value: string): value is GearCategory {
   return (GEAR_CATEGORIES as readonly string[]).includes(value);
@@ -19,7 +21,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { category } = await params;
   if (!isGearCategory(category)) return {};
-  return { title: `${GEAR_CATEGORY_LABELS[category]} Reviews` };
+  const label = GEAR_CATEGORY_LABELS[category];
+  return buildMetadata({
+    title: `Motorcycle ${label}: Reviews & Ratings`,
+    description: `Field-tested reviews of motorcycle ${label.toLowerCase()} with ratings, honest pros and cons, specs and where to buy.`,
+    path: `/gear/${category}`,
+  });
 }
 
 export default async function GearCategoryPage({
@@ -35,6 +42,16 @@ export default async function GearCategoryPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <JsonLd
+        data={[
+          breadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Gear", path: "/gear" },
+            { name: label, path: `/gear/${category}` },
+          ]),
+          itemListJsonLd(`${label} reviews`, items),
+        ]}
+      />
       <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-accent">Gear / {label}</p>
       <h1 className="font-display mt-2 text-4xl leading-tight sm:text-5xl">{label}</h1>
       <p className="mt-3 text-lg text-foreground/75">{items.length} reviewed and rated.</p>

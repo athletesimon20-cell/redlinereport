@@ -7,6 +7,8 @@ import { Gallery } from "./gallery";
 import { ProductPlaceholderArt } from "@/components/product/product-placeholder-art";
 import { BuyBox } from "@/components/buy-box/buy-box";
 import { RenderBody } from "@/components/portable-text/render-body";
+import { JsonLd } from "@/components/seo/json-ld";
+import { breadcrumbJsonLd, productBreadcrumbs, reviewJsonLd } from "@/lib/seo";
 import { getRelated, type AnyProduct } from "@/lib/content/products";
 import type { SpecFieldDef } from "@/lib/specs/categories";
 
@@ -23,6 +25,7 @@ export async function ReviewPage({
 
   return (
     <article className="pb-20">
+      <JsonLd data={[reviewJsonLd(product), breadcrumbJsonLd(productBreadcrumbs(product))]} />
       <ReviewHeader
         eyebrow={eyebrow}
         title={product.title}
@@ -52,7 +55,7 @@ export async function ReviewPage({
         )}
       </div>
 
-      <Gallery items={product.gallery} />
+      <Gallery items={product.gallery} productTitle={product.title} />
 
       <div className="mx-auto mt-12 grid max-w-4xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_280px] lg:gap-12">
         <div className="min-w-0 prose-content pb-16 lg:pb-0">

@@ -4,6 +4,7 @@ import { ReviewPage } from "@/components/review/review-page";
 import { getAllGear, getGearBySlug } from "@/lib/content/products";
 import { gearCategorySpecs } from "@/lib/specs/categories";
 import { GEAR_CATEGORIES, GEAR_CATEGORY_LABELS, type GearCategory } from "@/lib/taxonomy";
+import { productMetadata } from "@/lib/seo";
 
 function isGearCategory(value: string): value is GearCategory {
   return (GEAR_CATEGORIES as readonly string[]).includes(value);
@@ -23,10 +24,7 @@ export async function generateMetadata({
   if (!isGearCategory(category)) return {};
   const product = await getGearBySlug(category, slug);
   if (!product) return {};
-  return {
-    title: product.title,
-    description: product.seo?.metaDescription ?? product.excerpt,
-  };
+  return productMetadata(product, product.permalink);
 }
 
 export default async function GearReviewPage({

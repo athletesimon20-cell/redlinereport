@@ -3,8 +3,14 @@ import { ProductPicker } from "@/components/compare/product-picker";
 import { CompareTable } from "@/components/compare/compare-table";
 import { getAllBikes } from "@/lib/content/products";
 import { bikeSpecs } from "@/lib/specs/categories";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Compare Motorcycles" };
+export const metadata: Metadata = buildMetadata({
+  title: "Compare Motorcycles",
+  description:
+    "Compare motorcycles side by side — engine, power, weight, seat height and price, up to four bikes at once.",
+  path: "/compare/bikes",
+});
 
 export default async function CompareBikesPage({
   searchParams,

@@ -5,6 +5,7 @@ import { CompareTable } from "@/components/compare/compare-table";
 import { getGearByCategory } from "@/lib/content/products";
 import { gearCategorySpecs } from "@/lib/specs/categories";
 import { GEAR_CATEGORIES, GEAR_CATEGORY_LABELS, type GearCategory } from "@/lib/taxonomy";
+import { buildMetadata } from "@/lib/seo";
 
 function isGearCategory(value: string): value is GearCategory {
   return (GEAR_CATEGORIES as readonly string[]).includes(value);
@@ -21,7 +22,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { category } = await params;
   if (!isGearCategory(category)) return {};
-  return { title: `Compare ${GEAR_CATEGORY_LABELS[category]}` };
+  const label = GEAR_CATEGORY_LABELS[category];
+  // Canonical ignores ?items=... so every selection counts as the same page.
+  return buildMetadata({
+    title: `Compare ${label}`,
+    description: `Compare motorcycle ${label.toLowerCase()} side by side — pick up to four and line up the specs that matter.`,
+    path: `/compare/gear/${category}`,
+  });
 }
 
 export default async function CompareGearCategoryPage({
